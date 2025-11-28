@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/game_provider.dart';
 import 'providers/auth_provider.dart';
+import 'services/background_service.dart';
+import 'services/notification_service.dart';
 import 'screens/main_screen.dart';
 import 'utils/supabase_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,7 +13,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
-
+  await NotificationService().init();
+  await BackgroundService.initialize();
+  await BackgroundService.registerPeriodicTask();
+  
   // Supabase 초기화
   try {
     await Supabase.initialize(
@@ -19,8 +24,6 @@ void main() async {
       anonKey: SupabaseConfig.supabaseAnonKey,
     );
   } catch (e) {
-    print('Supabase 초기화 실패: $e');
-    print('Supabase를 사용하지 않고 계속합니다...');
   }
 
   runApp(const GameDealHunterApp());

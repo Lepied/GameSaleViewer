@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/favorite.dart';
 import '../services/supabase_service.dart';
+import '../services/background_service.dart';
 
 /// 인증 및 찜 목록을 관리하는 Provider
 class AuthProvider extends ChangeNotifier {
@@ -118,6 +119,8 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       _favorites = await _supabaseService.getFavorites();
+      final id = _favorites.map((f) => f.gameId).toList();
+      await BackgroundService.syncFavorites(id);
       notifyListeners();
     } catch (e) {
       print('찜 목록 로드 실패: $e');
