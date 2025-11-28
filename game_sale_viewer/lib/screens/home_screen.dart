@@ -27,18 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<GameProvider>(context);
 
-    // 콘솔 로그 출력
-    print('=== 게임 로드 정보 ===');
-    print('오늘의 미친 특가: ${gameProvider.specialDeals.length}개');
-    print('메타스코어 90+ 할인 게임: ${gameProvider.highRatedDeals.length}개');
-    if (gameProvider.highRatedDeals.isNotEmpty) {
-      print('메타스코어 90+ 게임 목록:');
-      for (var deal in gameProvider.highRatedDeals.take(5)) {
-        print('  - ${deal.title} (${deal.metacriticScore}점, -${deal.savings.split('.')[0]}% 할인)');
-      }
-    }
-    print('====================');
-
     return RefreshIndicator(
         onRefresh: () => gameProvider.loadInitialData(),
         child: CustomScrollView(
@@ -118,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 300,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
                     itemCount: gameProvider.highRatedDeals.take(10).length,
                     itemBuilder: (context, index) {
                       return Container(
@@ -322,17 +310,10 @@ class _BannerCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              const Color(0xFF1E1E1E),
               const Color(0xFF2a475e),
+              const Color(0xFF1E1E1E),
             ],
           ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF2a475e).withOpacity(0.7),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
@@ -383,13 +364,13 @@ class _BannerCard extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF7f9751),
-                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xFF4C6B22),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         '-${deal.savings.split('.')[0]}%',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: const Color(0xFFB8E712),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -427,7 +408,7 @@ class _BannerCard extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
-                            color: Colors.green,
+                            color: const Color(0xFFB8E712)
                           ),
                         ),
                       ],

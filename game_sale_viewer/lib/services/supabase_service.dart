@@ -27,15 +27,6 @@ class SupabaseService {
         password: password,
         data: {'username': username},
       );
-
-      // 프로필 생성
-      if (response.user != null) {
-        await _client.from('profiles').insert({
-          'id': response.user!.id,
-          'username': username ?? email.split('@')[0],
-        });
-      }
-
       return response;
     } catch (e) {
       print('Error signing up: $e');

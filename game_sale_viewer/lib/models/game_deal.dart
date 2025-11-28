@@ -33,12 +33,12 @@ class GameDeal {
   /// JSON에서 객체로 변환
   factory GameDeal.fromJson(Map<String, dynamic> json) {
     return GameDeal(
-      dealID: json['dealID'] ?? '',
+      dealID: json['dealID'] ?? json['cheapestDealID'] ??'',
       gameID: json['gameID'] ?? '',
-      title: json['title'] ?? '',
+      title: json['title'] ?? json['external'] ?? '',
       storeID: json['storeID'] ?? '',
-      salePrice: json['salePrice'] ?? '0.00',
-      normalPrice: json['normalPrice'] ?? '0.00',
+      salePrice: json['salePrice'] ?? json['cheapest'] ?? '0.00',
+      normalPrice: json['normalPrice'] ?? json['cheapest'] ?? '0.00',
       savings: json['savings'] ?? '0',
       metacriticScore: json['metacriticScore'] ?? '0',
       steamRatingPercent: json['steamRatingPercent'] ?? '0',

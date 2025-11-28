@@ -22,8 +22,9 @@ class GameDealCard extends StatelessWidget {
     final isFavorite = authProvider.isFavorite(deal.gameID);
 
     return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      elevation: 1,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      color: const Color(0xFF1b2838),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -113,7 +114,7 @@ class GameDealCard extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF7f9751),
+                        color: const Color(0xFF4C6B22),
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
@@ -126,7 +127,7 @@ class GameDealCard extends StatelessWidget {
                       child: Text(
                         '-${deal.savingsPercent.toStringAsFixed(0)}%',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFFB8E712),
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -220,7 +221,7 @@ class GameDealCard extends StatelessWidget {
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: deal.savingsPercent > 0
-                                  ? Colors.green.shade400
+                                  ? const Color(0xFFB8E712)
                                   : Colors.white,
                             ),
                             overflow: TextOverflow.ellipsis,

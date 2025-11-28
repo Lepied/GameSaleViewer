@@ -143,7 +143,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> with AutomaticKeepAli
                   ),
                   // 삭제 버튼
                   IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
+                    icon: const Icon(Icons.delete, color: Colors.grey),
                     onPressed: () {
                       _showDeleteDialog(context, authProvider, favorite.gameId);
                     },

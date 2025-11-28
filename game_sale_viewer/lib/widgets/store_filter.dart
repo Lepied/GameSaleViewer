@@ -31,7 +31,7 @@ class StoreFilter extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: stores.length,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           itemBuilder: (context, index) {
             final store = stores[index];
             final isSelected = selectedStoreId == store['id'];
