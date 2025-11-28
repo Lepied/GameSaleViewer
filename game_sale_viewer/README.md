@@ -56,84 +56,12 @@ cd GameSaleViewer/game_sale_viewer
 flutter pub get
 ```
 
-### 4. Supabase 설정
-
-#### 4.1 Supabase 프로젝트 생성
-1. [Supabase](https://supabase.com/) 계정 생성
-2. 새 프로젝트 생성
-3. 프로젝트 URL과 anon key 복사
-
-#### 4.2 데이터베이스 스키마 설정
-Supabase 대시보드 > SQL Editor에서 다음 쿼리 실행:
-
-```sql
--- profiles 테이블 생성
-CREATE TABLE profiles (
-  id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
-  username TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
-);
-
--- Row Level Security (RLS) 활성화
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-
--- 정책 설정
-CREATE POLICY "Users can view own profile"
-  ON profiles FOR SELECT
-  USING (auth.uid() = id);
-
-CREATE POLICY "Users can update own profile"
-  ON profiles FOR UPDATE
-  USING (auth.uid() = id);
-
--- favorites 테이블 생성
-CREATE TABLE favorites (
-  id BIGSERIAL PRIMARY KEY,
-  user_id UUID REFERENCES auth.users ON DELETE CASCADE NOT NULL,
-  game_id TEXT NOT NULL,
-  game_title TEXT NOT NULL,
-  thumb_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
-  UNIQUE(user_id, game_id)
-);
-
--- Row Level Security (RLS) 활성화
-ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
-
--- 정책 설정
-CREATE POLICY "Users can view own favorites"
-  ON favorites FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can insert own favorites"
-  ON favorites FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete own favorites"
-  ON favorites FOR DELETE
-  USING (auth.uid() = user_id);
-
--- 인덱스 생성
-CREATE INDEX favorites_user_id_idx ON favorites(user_id);
-CREATE INDEX favorites_game_id_idx ON favorites(game_id);
-```
-
-#### 4.3 앱 설정 파일 수정
-`lib/utils/supabase_config.dart` 파일을 열고 Supabase 정보 입력:
-
-```dart
-class SupabaseConfig {
-  static const String supabaseUrl = 'YOUR_SUPABASE_URL';
-  static const String supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
-}
-```
-
-### 5. 웹에서 실행
+### 4. 웹에서 실행
 ```bash
 flutter run -d chrome
 ```
 
-### 6. 다른 플랫폼에서 실행
+### 5. 다른 플랫폼에서 실행
 ```bash
 # Android
 flutter run -d android
