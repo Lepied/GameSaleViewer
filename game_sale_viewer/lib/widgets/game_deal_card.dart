@@ -204,9 +204,9 @@ class GameDealCard extends StatelessWidget {
                           Flexible(
                             child: Text(
                               '\$${deal.normalPrice}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey[500],
+                                color: Colors.white,
                                 decoration: TextDecoration.lineThrough,
                               ),
                               overflow: TextOverflow.ellipsis,

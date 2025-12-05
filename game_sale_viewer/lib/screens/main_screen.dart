@@ -5,6 +5,7 @@ import 'home_screen.dart';
 import 'search_screen.dart';
 import 'favorites_screen.dart';
 import 'auth_screen.dart';
+import 'notifications_screen.dart';
 
 /// 하단 네비게이션이 있는 메인 화면
 class MainScreen extends StatefulWidget {
@@ -34,9 +35,7 @@ class _MainScreenState extends State<MainScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue.shade600, Colors.purple.shade600],
-                ),
+                color: Colors.blue.shade600,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(Icons.videogame_asset, size: 20),
@@ -56,11 +55,9 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('알림 기능은 곧 추가될 예정입니다'),
-                  duration: Duration(seconds: 2),
-                ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NotificationsScreen()),
               );
             },
           ),

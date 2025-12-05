@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -84,5 +86,26 @@ class NotificationService {
       notificationDetails,
       payload: payload, 
     );
+
+    // 로컬 저장소에 알림 항목 추가
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = 'saved_notifications';
+      final existing = prefs.getStringList(key) ?? <String>[];
+
+      final Map<String, dynamic> item = {
+        'id': id.toString(),
+        'title': title,
+        'body': body,
+        'payload': payload,
+        'receivedAt': DateTime.now().toUtc().toIso8601String(),
+        'read': false,
+      };
+
+      existing.insert(0, json.encode(item)); // 최신순으로 앞에 추가
+      await prefs.setStringList(key, existing);
+    } catch (e) {
+      print('⚠️ 로컬 알림 저장 실패: $e');
+    }
   }
 }

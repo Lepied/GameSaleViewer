@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onRefresh: () => gameProvider.loadInitialData(),
         child: CustomScrollView(
           slivers: [
-            // 오늘의 미친 특가 배너 섹션
+            // 오늘의 특가 배너 섹션
             if (gameProvider.specialDeals.isNotEmpty) ...[
               SliverToBoxAdapter(
                 child: Padding(
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            '오늘의 미친 특가',
+                            '오늘의 특가',
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
@@ -303,17 +303,10 @@ class _BannerCard extends StatelessWidget {
           ),
         );
       },
-      child: Container(
+        child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              const Color(0xFF2a475e),
-              const Color(0xFF1E1E1E),
-            ],
-          ),
+          color: const Color(0xFF1E1E1E),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
@@ -335,19 +328,10 @@ class _BannerCard extends StatelessWidget {
                   ),
                 ),
               ),
-              // 그라데이션 오버레이
+              // 단색 오버레이 (그라데이션 제거)
               Positioned.fill(
                 child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.8),
-                      ],
-                    ),
-                  ),
+                  color: Colors.black.withOpacity(0.6),
                 ),
               ),
               // 내용

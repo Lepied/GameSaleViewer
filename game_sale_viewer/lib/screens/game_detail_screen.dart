@@ -12,6 +12,13 @@ import '../services/itad_api_service.dart';
 import '../providers/auth_provider.dart';
 import 'dart:math';
 
+const Color kSteamBg = Color(0xFF171A21);
+const Color kSteamAccent = Color(0xFF66C0F4);
+const Color kSteamPrimary = Color(0xFF1B2838);
+const Color kSteamSecondary = Color(0xFF2A475E);
+const Color kSteamLight = Color(0xFFC7D5E0);
+const Color kSteamDiscount = Color(0xFF4C6B22);
+
 /// 게임 상세 정보 화면
 class GameDetailScreen extends StatefulWidget {
   final String gameId;
@@ -228,16 +235,8 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.7),
-                      ],
-                    ),
-                  ),
+                  // 오버레이: Steam 다크 패널 색상
+                  color: kSteamPrimary.withOpacity(0.85),
                 ),
               ],
             ),
@@ -246,7 +245,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
             IconButton(
               icon: Icon(
                 isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.red : Colors.white,
+                color: isFavorite ? Colors.red : kSteamLight,
               ),
               onPressed: () async {
                 if (!authProvider.isLoggedIn) {
@@ -404,26 +403,24 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
     return Row(
       children: [
         if (bestDeal.savingsPercent > 0) ...[
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.red.shade600, Colors.orange.shade600],
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                        color: kSteamDiscount,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.local_fire_department, color: Colors.white, size: 16),
+                        const Icon(Icons.local_fire_department, color: Color(0xFFB8E712), size: 16),
                 const SizedBox(width: 4),
-                Text(
-                  '-${bestDeal.savingsPercent.toStringAsFixed(0)}% 할인',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                            Text(
+                              '-${bestDeal.savingsPercent.toStringAsFixed(0)}% 할인',
+                              style: const TextStyle(
+                                color: Color(0xFFB8E712),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
               ],
             ),
           ),
@@ -445,7 +442,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
     final storeName = StoreIds.getStoreName(bestDeal.storeID);
 
     return Card(
-      color: Colors.purple.shade700,
+      color: kSteamSecondary,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -455,7 +452,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
               '현재 최저가',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.white70,
+                color: kSteamLight,
               ),
             ),
             const SizedBox(height: 12),
@@ -467,7 +464,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: kSteamLight,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -476,7 +473,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                     '\$${bestDeal.retailPrice}',
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.white70,
+                      color: const Color(0xFFB8E712),
                       decoration: TextDecoration.lineThrough,
                     ),
                   ),
@@ -487,13 +484,13 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.red.shade600,
+                      color: kSteamDiscount,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       '-${bestDeal.savingsPercent.toStringAsFixed(0)}%',
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Color(0xFFB8E712),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -507,8 +504,8 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
               child: ElevatedButton.icon(
                 onPressed: () => _openStorePage(bestDeal.dealID),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.purple.shade700,
+                  backgroundColor: kSteamLight,
+                  foregroundColor: kSteamSecondary,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -539,7 +536,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
     
     if (valueScore >= 9.0) {
       qualityText = '역대급 딜!';
-      qualityColor = Colors.purple;
+      qualityColor = kSteamAccent;
     } else if (valueScore >= 7.5) {
       qualityText = '훌륭한 가격';
       qualityColor = Colors.green;
@@ -560,12 +557,12 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.analytics, color: Colors.green),
+                Icon(Icons.analytics, color: kSteamAccent),
                 SizedBox(width: 8),
                 Text(
-                  '💰 가격 대비 가치 분석',
+                  '가격 대비 가치 분석',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -613,7 +610,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                   child: Text(
                     qualityText,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: kSteamLight,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -677,12 +674,12 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isHistoricalLow 
-            ? Colors.green.shade900.withOpacity(0.3) 
-            : Colors.grey.shade800,
+          ? kSteamDiscount.withOpacity(0.25) 
+          : Colors.grey.shade800,
         borderRadius: BorderRadius.circular(12),
         border: isHistoricalLow 
-            ? Border.all(color: Colors.green.shade600, width: 2)
-            : null,
+          ? Border.all(color: kSteamDiscount.withOpacity(0.9), width: 2)
+          : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -715,7 +712,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                     : (priceDiff > 0 ? Icons.arrow_upward : Icons.check),
                 color: isHistoricalLow 
                     ? Colors.amber 
-                    : (priceDiff > 0 ? Colors.red : Colors.green),
+                    : (priceDiff > 0 ? Colors.red : kSteamDiscount),
                 size: 32,
               ),
               Column(
@@ -750,12 +747,12 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.celebration, color: Colors.white, size: 16),
+                  const Icon(Icons.celebration, color: kSteamLight, size: 16),
                   const SizedBox(width: 6),
                   const Text(
-                    '🎉 역대 최저가 달성!',
+                    '역대 최저가 달성!',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: kSteamLight,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -974,7 +971,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                 Icon(Icons.store, color: Colors.blue),
                 SizedBox(width: 8),
                 Text(
-                  '🏪 판매 중인 스토어',
+                  '판매 중인 스토어',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -998,11 +995,11 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isBestPrice ? Colors.green.shade900.withOpacity(0.3) : Colors.grey.shade800,
+        color: isBestPrice ? kSteamDiscount.withOpacity(0.18) : Colors.grey.shade800,
         borderRadius: BorderRadius.circular(12),
         border: isBestPrice
-            ? Border.all(color: Colors.green.shade600, width: 2)
-            : null,
+          ? Border.all(color: kSteamDiscount.withOpacity(0.9), width: 2)
+          : null,
       ),
       child: Row(
         children: [
@@ -1021,10 +1018,10 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                     ),
                     if (isBestPrice) ...[
                       const SizedBox(width: 8),
-                      const Text(
+                      Text(
                         '✨ 최저가',
                         style: TextStyle(
-                          color: Colors.green,
+                          color: const Color(0xFFB8E712),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -1046,9 +1043,9 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                       Text(
                         '-${deal.savingsPercent.toStringAsFixed(0)}%',
                         style: TextStyle(
-                          color: Colors.red.shade400,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: const Color(0xFFB8E712),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ],
@@ -1059,7 +1056,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
           ElevatedButton.icon(
             onPressed: () => _openStorePage(deal.dealID),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.purple.shade600,
+              backgroundColor: kSteamSecondary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -1079,7 +1076,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
-              Icon(Icons.videogame_asset, color: Colors.blue.shade400, size: 32),
+              Icon(Icons.videogame_asset, color: kSteamAccent, size: 32),
               const SizedBox(width: 12),
               const Text(
                 'Steam 평점 정보 로딩 중...',
@@ -1156,10 +1153,10 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
           children: [
             Row(
               children: [
-                Icon(Icons.videogame_asset, color: Colors.blue.shade400, size: 32),
+                Icon(Icons.videogame_asset, color: kSteamAccent, size: 32),
                 const SizedBox(width: 12),
                 const Text(
-                  '🎮 Steam 평가',
+                  'Steam 평가',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -1190,7 +1187,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                             child: Text(
                               ratingText,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: kSteamLight,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),
@@ -1323,7 +1320,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                 Icon(Icons.show_chart, color: Colors.blue),
                 SizedBox(width: 8),
                 Text(
-                  '📈 6개월 가격 추이 (주간)',
+                  '6개월 가격 추이 (주간)',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -1355,29 +1352,22 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                         LineChartBarData(
                           spots: spots,
                           isCurved: true,
-                          color: Colors.blue.shade400,
+                          color: kSteamAccent,
                           barWidth: 3,
                           dotData: FlDotData(
                             show: true,
                             getDotPainter: (spot, percent, bar, index) {
                               return FlDotCirclePainter(
                                 radius: 5,
-                                color: Colors.blue.shade600,
+                                color: kSteamSecondary,
                                 strokeWidth: 2,
-                                strokeColor: Colors.white,
+                                strokeColor: kSteamLight,
                               );
                             },
                           ),
+                          // 아래 영역 채우기(그라데이션) 제거
                           belowBarData: BarAreaData(
-                            show: true,
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.blue.shade400.withOpacity(0.3),
-                                Colors.blue.shade400.withOpacity(0.0),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
+                            show: false,
                           ),
                         ),
                       ],
@@ -1470,7 +1460,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                             '최저: \$${data['low'].toStringAsFixed(2)}\n'
                             '평균: \$${spot.y.toStringAsFixed(2)}',
                             const TextStyle(
-                              color: Colors.white,
+                              color: kSteamLight,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),

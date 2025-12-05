@@ -177,6 +177,21 @@ class CheapSharkApiService {
     }
   }
 
+  /// 주어진 타이틀에 대해 가장 좋은(저렴한 또는 높은 딜레이팅) 딜 하나를 반환합니다.
+  /// 내부적으로 `getDeals`를 호출해서 타이틀로 필터링한 뒤 최저가를 선택합니다.
+  Future<GameDeal?> getBestDealForTitle(String title) async {
+    try {
+      final deals = await getDeals(title: title, pageSize: 10, sortBy: 'Deal Rating');
+      if (deals.isEmpty) return null;
+      // 최저가 선택
+      deals.sort((a, b) => a.salePriceNum.compareTo(b.salePriceNum));
+      return deals.first;
+    } catch (e) {
+      print('Error fetching best deal for title "$title": $e');
+      return null;
+    }
+  }
+
   /// 게임 상세 정보 조회
   /// 
   /// [gameID] - 조회할 게임 ID
