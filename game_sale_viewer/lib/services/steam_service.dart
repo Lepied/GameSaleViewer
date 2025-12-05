@@ -29,7 +29,6 @@ class SteamService {
         'name': e['name'],
       }).toList();
     } catch (e) {
-      print('Steam search error: $e');
       return [];
     }
   }
@@ -52,7 +51,6 @@ class SteamService {
       }
       return null;
     } catch (e) {
-      print('Steam appdetails error: $e');
       return null;
     }
   }

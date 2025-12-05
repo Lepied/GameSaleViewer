@@ -81,36 +81,20 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
   }
 
   Future<void> _loadITADData(String steamAppId, String title) async {
-    print('🔄 ITAD 데이터 로딩 시작...');
-    print('Steam AppID: $steamAppId');
-    print('게임 제목: $title');
-    
     setState(() {
       _loadingITADData = true;
     });
 
     try {
       // Steam AppID로 ITAD 게임 조회
-      print('🔍 AppID로 게임 조회 중...');
       String? itadId = await _itadService.lookupGameByAppId(steamAppId);
       
-      if (itadId != null && itadId.isNotEmpty) {
-        print('✅ AppID로 게임 찾음: $itadId');
-      } else {
-        print('❌ AppID로 게임 못찾음, 제목으로 시도...');
+      if (itadId == null || itadId.isEmpty) {
         // AppID로 실패하면 제목으로 시도
         itadId = await _itadService.lookupGameByTitle(title);
-        
-        if (itadId != null && itadId.isNotEmpty) {
-          print('✅ 제목으로 게임 찾음: $itadId');
-        } else {
-          print('❌ 제목으로도 게임 못찾음');
-        }
       }
 
       if (itadId != null && itadId.isNotEmpty && mounted) {
-        print('📊 가격 히스토리 & 역대 최저가 & 현재 가격 로딩 중...');
-        
         // 가격 히스토리, 역대 최저가, 현재 가격 동시 로드
         final results = await Future.wait([
           _itadService.getPriceHistory(itadId),
@@ -121,10 +105,6 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
         final priceHistory = results[0] as List<PriceHistory>;
         final historicalLow = results[1] as HistoricalLow?;
         final currentPrices = results[2] as List<CurrentPrice>;
-        
-        print('📈 가격 히스토리 개수: ${priceHistory.length}');
-        print('🏆 역대 최저가: ${historicalLow != null ? "\$${historicalLow.price.amount}" : "없음"}');
-        print('💰 현재 가격 정보: ${currentPrices.length}개');
 
         if (mounted) {
           setState(() {
@@ -134,11 +114,8 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
             _currentPrices = currentPrices;
             _loadingITADData = false;
           });
-          
-          print('✅ ITAD 데이터 로딩 완료!');
         }
       } else {
-        print('⚠️ ITAD 게임 ID를 찾을 수 없음');
         if (mounted) {
           setState(() {
             _loadingITADData = false;
@@ -146,7 +123,6 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
         }
       }
     } catch (e) {
-      print('❌ ITAD 데이터 로딩 에러: $e');
       if (mounted) {
         setState(() {
           _loadingITADData = false;
@@ -165,7 +141,6 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
         });
       }
     } catch (e) {
-      print('Error loading Steam rating: $e');
       // 스팀 평점 로드 실패시에도 다른 정보는 표시
     }
   }

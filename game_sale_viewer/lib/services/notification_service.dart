@@ -46,7 +46,6 @@ class NotificationService {
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         // 알림을 눌렀을 때 실행될 로직
         if (response.payload != null) {
-          print('알림 클릭됨! Payload: ${response.payload}');
           // 페이지 이동 로직 처리넣기
         }
       },
@@ -105,7 +104,7 @@ class NotificationService {
       existing.insert(0, json.encode(item)); // 최신순으로 앞에 추가
       await prefs.setStringList(key, existing);
     } catch (e) {
-      print('⚠️ 로컬 알림 저장 실패: $e');
+      // 로컬 알림 저장 실패
     }
   }
 }

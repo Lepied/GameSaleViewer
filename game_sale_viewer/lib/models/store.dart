@@ -56,7 +56,6 @@ class StoreIds {
       _storeNameCache[store.storeID] = store.storeName;
     }
     _isLoaded = true;
-    print('스토어 맵 초기화 완료: ${_storeNameCache.length}개 스토어');
   }
 
   /// 스토어 ID를 이름으로 매핑

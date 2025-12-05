@@ -49,7 +49,6 @@ void callbackDispatcher() {
       }
 
     } catch (e) {
-      print("❌ 백그라운드 작업 실패: $e");
       return Future.value(false);
     }
 
@@ -82,6 +81,5 @@ class BackgroundService {
   static Future<void> syncFavorites(List<String> gameIds) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList('favorite_game_ids', gameIds);
-    print("💾 백그라운드용 찜 목록 동기화 완료: ${gameIds.length}개");
   }
 }

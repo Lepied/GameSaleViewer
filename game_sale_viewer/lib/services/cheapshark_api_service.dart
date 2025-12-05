@@ -108,7 +108,6 @@ class CheapSharkApiService {
         throw Exception('Failed to load deals: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching deals: $e');
       rethrow;
     }
   }
@@ -146,7 +145,6 @@ class CheapSharkApiService {
       
       return bestDealsByTitle.values.toList();
     } catch (e) {
-      print('Error fetching today special deals: $e');
       return [];
     }
   }
@@ -172,7 +170,6 @@ class CheapSharkApiService {
         throw Exception('Failed to search games: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error searching games: $e');
       rethrow;
     }
   }
@@ -187,7 +184,6 @@ class CheapSharkApiService {
       deals.sort((a, b) => a.salePriceNum.compareTo(b.salePriceNum));
       return deals.first;
     } catch (e) {
-      print('Error fetching best deal for title "$title": $e');
       return null;
     }
   }
@@ -210,7 +206,6 @@ class CheapSharkApiService {
         throw Exception('Failed to load game detail: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching game detail: $e');
       return null;
     }
   }
@@ -240,7 +235,6 @@ class CheapSharkApiService {
       
       return null;
     } catch (e) {
-      print('Error fetching Steam rating: $e');
       return null;
     }
   }
@@ -258,7 +252,6 @@ class CheapSharkApiService {
         throw Exception('Failed to load stores: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching stores: $e');
       rethrow;
     }
   }
@@ -292,7 +285,6 @@ class CheapSharkApiService {
       }
       return null;
     } catch (e) {
-      print('Error fetching price history: $e');
       return null;
     }
   }

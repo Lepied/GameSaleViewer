@@ -29,7 +29,6 @@ class SupabaseService {
       );
       return response;
     } catch (e) {
-      print('Error signing up: $e');
       rethrow;
     }
   }
@@ -45,7 +44,6 @@ class SupabaseService {
         password: password,
       );
     } catch (e) {
-      print('Error signing in: $e');
       rethrow;
     }
   }
@@ -55,7 +53,6 @@ class SupabaseService {
     try {
       await _client.auth.signOut();
     } catch (e) {
-      print('Error signing out: $e');
       rethrow;
     }
   }
@@ -65,7 +62,6 @@ class SupabaseService {
     try {
       await _client.auth.resetPasswordForEmail(email);
     } catch (e) {
-      print('Error resetting password: $e');
       rethrow;
     }
   }
@@ -87,7 +83,6 @@ class SupabaseService {
           .map((json) => Favorite.fromJson(json))
           .toList();
     } catch (e) {
-      print('Error fetching favorites: $e');
       rethrow;
     }
   }
@@ -101,7 +96,6 @@ class SupabaseService {
 
       await _client.from('favorites').insert(favorite.toInsertJson());
     } catch (e) {
-      print('Error adding favorite: $e');
       rethrow;
     }
   }
@@ -119,7 +113,6 @@ class SupabaseService {
           .eq('user_id', currentUser!.id)
           .eq('game_id', gameId);
     } catch (e) {
-      print('Error removing favorite: $e');
       rethrow;
     }
   }
@@ -140,7 +133,6 @@ class SupabaseService {
 
       return response != null;
     } catch (e) {
-      print('Error checking favorite: $e');
       return false;
     }
   }
@@ -160,7 +152,6 @@ class SupabaseService {
 
       return response;
     } catch (e) {
-      print('Error fetching user profile: $e');
       return null;
     }
   }
@@ -178,7 +169,6 @@ class SupabaseService {
         'username': username,
       }).eq('id', currentUser!.id);
     } catch (e) {
-      print('Error updating user profile: $e');
       rethrow;
     }
   }

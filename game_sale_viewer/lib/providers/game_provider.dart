@@ -57,7 +57,6 @@ class GameProvider extends ChangeNotifier {
       final stores = await _apiService.getStores();
       StoreIds.initializeStoreMap(stores);
     } catch (e) {
-      print('스토어 목록 로드 실패: $e');
       // 실패해도 기본 매핑으로 계속 진행
     }
   }
@@ -93,7 +92,6 @@ class GameProvider extends ChangeNotifier {
       _error = null;
     } catch (e) {
       _error = '딜을 불러오는데 실패했습니다: $e';
-      print(_error);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -106,7 +104,7 @@ class GameProvider extends ChangeNotifier {
       _specialDeals = await _apiService.getTodaySpecialDeals();
       notifyListeners();
     } catch (e) {
-      print('특가를 불러오는데 실패했습니다: $e');
+      // 특가 로드 실패
     }
   }
 
@@ -145,10 +143,9 @@ class GameProvider extends ChangeNotifier {
       }
 
       _highRatedDeals = bestDealsByTitle.values.toList();
-      print('메타스코어 90+ 게임 로드 완료: ${_highRatedDeals.length}개');
       notifyListeners();
     } catch (e) {
-      print('메타스코어 90+ 게임을 불러오는데 실패했습니다: $e');
+      // 메타스코어 90+ 게임 로드 실패
     }
   }
 
@@ -240,7 +237,6 @@ class GameProvider extends ChangeNotifier {
       _error = null;
     } catch (e) {
       _error = '검색에 실패했습니다: $e';
-      print(_error);
     } finally {}
   }
 
@@ -328,7 +324,7 @@ class GameProvider extends ChangeNotifier {
       _searchResults = merged.values.toList();
       _searchHasMore = deals.length == pageSize;
     } catch (e) {
-      print('Failed to load more search results: $e');
+      // 검색 결과 추가 로드 실패
     } finally {
       _isLoadingMore = false;
       notifyListeners();
@@ -374,7 +370,6 @@ class GameProvider extends ChangeNotifier {
       _error = null;
     } catch (e) {
       _error = '필터링에 실패했습니다: $e';
-      print(_error);
     } finally {
       _isLoading = false;
       notifyListeners();

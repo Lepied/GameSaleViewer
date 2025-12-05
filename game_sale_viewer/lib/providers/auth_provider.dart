@@ -123,7 +123,7 @@ class AuthProvider extends ChangeNotifier {
       await BackgroundService.syncFavorites(id);
       notifyListeners();
     } catch (e) {
-      print('찜 목록 로드 실패: $e');
+      // 찜 목록 로드 실패
     }
   }
 
